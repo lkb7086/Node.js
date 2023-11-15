@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <title>Mandrake Boys - GM Tools</title>
+
+  <!-- bootstrap css -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" />
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/v/bs5/dt-1.13.1/af-2.5.1/sl-1.5.0/datatables.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.1/af-2.5.1/b-2.3.3/b-colvis-2.3.3/b-html5-2.3.3/b-print-2.3.3/cr-1.6.1/date-1.2.0/fc-4.2.1/fh-3.3.1/kt-2.8.0/r-2.4.0/rg-1.3.0/rr-1.3.1/sc-2.0.7/sb-1.4.0/sp-2.1.0/sl-1.5.0/sr-1.2.0/datatables.min.css" />
+
+  <link rel="stylesheet" href="css/default.css" />
+
+  <style>
+    div.dataTables_wrapper {
+      /*
+			width: 1025px;
+			margin: 0 auto;
+			*/
+    }
+
+    div.dt-buttons {
+      position: relative;
+      top: 0;
+      right: -33%;
+    }
+
+    table td:not(.user-data) {
+      word-break: break-word;
+      white-space: normal !important;
+    }
+
+    .table-hover tbody tr:hover td,
+    .table-hover tbody tr:hover th {
+      background-color: cadetblue;
+      color: aliceblue;
+    }
+
+    table.dataTable tr {
+      background-color: rgb(209, 192, 170);
+    }
+
+    table.dataTable tr:nth-child(even) {
+      background-color: rgb(209, 192, 170);
+    }
+
+    .user_data_table_scroll {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  </style>
+
+  <!-- bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <script src="lib/jquery/jquery-3.6.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script type="text/javascript"
+    src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.1/af-2.5.1/b-2.3.3/b-colvis-2.3.3/b-html5-2.3.3/b-print-2.3.3/cr-1.6.1/date-1.2.0/fc-4.2.1/fh-3.3.1/kt-2.8.0/r-2.4.0/rg-1.3.0/rr-1.3.1/sc-2.0.7/sb-1.4.0/sp-2.1.0/sl-1.5.0/sr-1.2.0/datatables.min.js"></script>
+
+  <script src="scripts/env.js"></script>
+  <script src="scripts/tab_user_info.js"></script>
+  <script src="scripts/tab_game_log.js"></script>
+  <script src="scripts/tab_all_event.js"></script>
+  <script src="scripts/tab_post_mail.js"></script>
+  <script src="scripts/tab_shop.js"></script>
+  <script src="scripts/tab_group_mail_reward.js"></script>
+  <script src="scripts/tab_all_notification.js"></script>
+  <script src="scripts/tab_collection.js"></script>
+  <script src="scripts/tab_subscribe_manager.js"></script>
+  <script src="scripts/main.js"></script>
+</head>
+
+<body>
+  <!-- top navigation bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+        aria-controls="offcanvasExample">
+        <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
+      </button>
+      <a class="navbar-brand pt-1" href="#">
+        <img src="imgs/images.jpg" alt="..." width="36" height="36">
+      </a>
+      <a class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold" href="#">Mandrake boys - GM Tools</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavBar"
+        aria-controls="topNavBar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="topNavBar">
+
+        <form class="d-flex ms-auto my-3 my-lg-0">
+          <!-- <div class="input-group">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
+            <button class="btn btn-primary" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </div> -->
+        </form>
+
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle ms-2" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="bi bi-person-fill"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <!-- <li><a class="dropdown-item" href="#">Login</a></li> -->
+              <li><a id="logout_link" class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- top navigation bar -->
+  <!-- offcanvas -->
+  <div class="offcanvas offcanvas-start sidebar-nav bg-dark" tabindex="-1" id="sidebar">
+    <div class="offcanvas-body p-0">
+      <nav class="navbar-dark">
+        <ul class="navbar-nav">
+          <!-- <li>
+            <div class="text-muted small fw-bold px-3">
+              http://owlogue.com
+            </div>
+          </li> -->
+
+          <li>
+            <a href="#" class="nav-link px-3 mt-3 active">
+              <span class="me-1"><i class="bi bi-house"></i></span>
+              <span>Owlogue</span>
+            </a>
+          </li>
+          <li class="my-2">
+            <hr class="dropdown-divider bg-light" />
+          </li>
+          <li>
+            <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
+              <h4>TOOLS</h4>
+            </div>
+          </li>
+          <li>
+            <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#layouts1">
+              <span class="me-2"><i class="bi bi-person-circle"></i></span>
+              <span>ADMIN</span>
+              <span class="ms-auto">
+                <!-- <span class="right-icon"> -->
+                <span>
+                  <i class="bi bi-chevron-down"></i>
+                </span>
+              </span>
+            </a>
+            <div class="collapse show" id="layouts1">
+              <ul class="navbar-nav ps-2">
+                <li>
+                  <!-- <a href="#" class="nav-link px-3">
+                    <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                    <span>Dashboard</span>
+                  </a> -->
+
+                  <!-- <div class="d-flex align-items-start" style="background-color:#202120; color: antiquewhite; padding: 10px"> -->
+                  <div class="nav flex-column nav-pills me-2" id="v-pills-tab" role="tablist"
+                    aria-orientation="vertical">
+                    <button class="nav-link active" id="tabbtn_user_info" data-bs-toggle="pill"
+                      data-bs-target="#tab_user_info" type="button" role="tab" aria-controls="tab_user_info">User
+                      Infomation</button>
+                    <button class="nav-link" id="tabbtn_game_log" data-bs-toggle="pill" data-bs-target="#tab_game_log"
+                      type="button" role="tab" aria-controls="tab_game_log">Game Log</button>
+                    <button class="nav-link" id="tabbtn_register_event" data-bs-toggle="pill"
+                      data-bs-target="#tab_register_event" type="button" role="tab"
+                      aria-controls="tab_register_event">Event</button>
+                    <button class="nav-link" id="tabbtn_post_mail" data-bs-toggle="pill" data-bs-target="#tab_post_mail"
+                      type="button" role="tab" aria-controls="tab_post_mail">Post Mail</button>
+                    <button class="nav-link" id="tabbtn_shop" data-bs-toggle="pill" data-bs-target="#tab_shop"
+                      type="button" role="tab" aria-controls="tab_shop">Shop</button>
+                    <button class="nav-link" id="tabbtn_group_mail_reward" data-bs-toggle="pill"
+                      data-bs-target="#tab_group_mail_reward" type="button" role="tab"
+                      aria-controls="tab_group_mail_reward">Group Mail Reward</button>
+                    <button class="nav-link" id="tabbtn_notification" data-bs-toggle="pill"
+                      data-bs-target="#tab_notification" type="button" role="tab"
+                      aria-controls="tab_notification">Notification</button>
+                    <button class="nav-link" id="tabbtn_collection" data-bs-toggle="pill"
+                      data-bs-target="#tab_collection" type="button" role="tab"
+                      aria-controls="tab_collection">Collection</button>
+                    <button class="nav-link" data-bs-toggle="pill" type="button" role="tab">━━━━━━━━━</button>
+                    <button class="nav-link" id="tabbtn_subscribe_manager" data-bs-toggle="pill"
+                      data-bs-target="#tab_subscribe_manager" type="button" role="tab"
+                      aria-controls="tab_subscribe_manager">Subscribe Manager</button>
+                    <!-- </div> -->
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- <li>
+            <a href="#" class="nav-link px-3">
+              <span class="me-2"><i class="bi bi-book-fill"></i></span>
+              <span>Pages</span>
+            </a>
+          </li> -->
+
+          <li class="my-3">
+            <hr class="dropdown-divider bg-light" />
+          </li>
+
+          <li>
+            <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
+              <h4>ETC</h4>
+            </div>
+          </li>
+
+          <li>
+            <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#layouts2">
+              <span class="me-2"><i class="bi bi-person-fill"></i></span>
+              <span>USER</span>
+              <span class="ms-auto">
+                <!-- <span class="right-icon"> -->
+                <span>
+                  <i class="bi bi-chevron-down"></i>
+                </span>
+              </span>
+            </a>
+
+            <div class="collapse" id="layouts2">
+              <ul class="navbar-nav ps-2">
+                <li>
+
+                  <a href="https://cafe.naver.com/mandrakeboys" target='_blank' class="nav-link px-3">
+                    <span class="me-2"><i class="bi bi-book-fill"></i></span>
+                    <span>Website</span>
+                  </a>
+
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <!-- offcanvas -->
+  <main class="mt-5 pt-5">
+    <div class="container-fluid">
+      <div class="tab-content" id="v-pills-tabContent">
+        <!--user_info------------------------------------------------------------------------------------------------------------------------------>
+        <div class="tab-pane fade show active" id="tab_user_info" role="tabpanel" aria-labelledby="tabbtn_user_info"
+          tabindex="0">
+          <h4>User Infomation</h4>
+
+          <div class="row pt-4">
+            <div class="col-auto">
+              <label class="form-label">ID Type</label>
+              <select id="user_info_id_type" class="form-select" aria-label="Default select example">
+                <option value="user_key" selected>user_key</option>
+                <option value="account_id">account_id</option>
+                <option value="service_key">service_key</option>
+                <option value="nick_name">nick_name</option>
+                <option value="receipt_order_id">receipt_order_id</option>
+              </select>
+            </div>
+
+            <div class="col-auto">
+              <label class="form-label">Details</label>
+              <select id="user_info_details" class="form-select" aria-label="Default select example">
+                <option value="user_data" selected>UserData</option>
+                <option value="flowers">Flowers</option>
+                <option value="mail">Mail</option>
+                <option value="inventory">Inventory</option>
+                <option value="Mandrake(Normal)">Mandrake(Normal)</option>
+                <option value="Mandrake(Rare)">Mandrake(Rare)</option>
+                <option value="Mandrake(Composite)">Mandrake(Composite)</option>
+                <option value="Tutorial">Tutorial</option>
+                <option value="Receipt">Receipt</option>
+                <option value="Seed">Seed</option>
+                <option value="Explore(Complete)">Explore(Complete)</option>
+                <option value="Explore(RUN)">Explore(RUN)</option>
+                <option value="CoolTime">CoolTime</option>
+                <option value="FriendList">FriendList</option>
+                <option value="Material">Material</option>
+                <option value="ShareReward(Normal)">ShareReward(Normal)</option>
+                <option value="ShareReward(Rare)">ShareReward(Rare)</option>
+                <option value="ShareReward(Composite)">ShareReward(Composite)</option>
+                <option value="Treasure">Treasure</option>
+                <option value="BadgeInventory">BadgeInventory</option>
+                <option value="LoginKey">LoginKey</option>
+              </select>
+            </div>
+
+            <div class="col-lg-3">
+              <label class="form-label">ID</label>
+              <div class="input-group">
+                <input id="user_info_finding_factor" type="text" class="form-control" placeholder=""
+                  aria-label="Text input with segmented dropdown button">
+                <div style="text-align: right">
+                  <button id="user_info_btn_find" type="button" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                    <span id="user_info_spinner_find" class="spinner-border spinner-border-sm" role="status"
+                      aria-hidden="true" hidden="true"></span>
+                    <span class="visually-hidden">Finding</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row pt-5">
+            <div class="col-12">
+              <table id="table_user_info"
+                class="table table-bordered table-hover table-striped-columns table-sm text-nowrap"
+                style="background-color: antiquewhite; font-size: 13px">
+              </table>
+            </div>
+          </div>
+
+          <div class="user_data_table_scroll">
+            <table id="user_data_table" class="table table-responsive table-warning table-hover">
+              <tbody>
+                <!-- <tr> -->
+                <!-- <th>user_key:</th> -->
+                <!-- <td class="user-data">1</td> -->
+                <!-- </tr> -->
+              </tbody>
+            </table>
+          </div>
+
+
+        </div>
+        <!---------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <!--game_log------------------------------------------------------------------------------------------------------------------------------>
+        <div class="tab-pane fade" id="tab_game_log" role="tabpanel" aria-labelledby="tabbtn_game_log" tabindex="0">
+          <h4>Game Log</h4>
+
+          <div class="row pt-4">
+            <div class="col-auto">
+              <label class="form-label">ID Type</label>
+              <select id="game_log_id_type" class="form-select" aria-label="Default select example">
+                <option value="user_key" selected>user_key</option>
+                <option value="account_id">account_id</option>
+                <option value="service_key">service_key</option>
+                <option value="nick_name">nick_name</option>
+                <option value="receipt_order_id">receipt_order_id</option>
+              </select>
+            </div>
+
+            <div class="col-auto">
+              <label class="form-label">Log Event Type</label>
+              <select id="game_log_log_event_type" class="form-select" aria-label="Default select example">
+                <option value="" selected>ALL</option>
+                <option value="0">UNKOWN</option>
+                <option value="1">COUPON_ACQUIRE</option>
+                <option value="2">NICK_CHANGE</option>
+                <option value="3">ACCOUNT_CHANGE_PASSWORD</option>
+                <option value="4">ACCOUNT_CREATE</option>
+                <option value="5">ACCOUNT_LOGIN</option>
+                <option value="6">ACCOUNT_DELETE</option>
+                <option value="7">ACCOUNT_REGISTER</option>
+                <option value="8">ACCOUNT_REGISTER_REWARD</option>
+                <option value="10">SHOP_BUY</option>
+                <option value="11">SHOP_BUY_CASH</option>
+                <option value="12">SHOP_PURCHASE</option>
+                <option value="20">DAILYREWARD_ACQUIRE</option>
+                <option value="30">MATERIAL_ACQUIRE_FOR_CURRENCY</option>
+                <option value="31">MATERIAL_ACQUIRE_FOR_ITEM</option>
+                <option value="32">MATERIAL_ACQUIRE_FOR_MATERIAL</option>
+                <option value="33">MATERIAL_SELL</option>
+                <option value="34">MATERIAL_ACQUIRE_FOR_CURRENCY_USE_STAR</option>
+                <option value="35">MATERIAL_ACQUIRE_FOR_MATERIAL_USE_STAR</option>
+                <option value="40">SEED & INTERIOR_BUY</option>
+                <option value="41">SEED & INTERIOR_USE</option>
+                <option value="50">EXPLORE_START</option>
+                <option value="51">EXPLORE_START_FOR_EVENT</option>
+                <option value="52">EXPLORE_CANCEL</option>
+                <option value="53">EXPLORE_COMPLETE</option>
+                <option value="54">EXPLORE_COMPLETE_USE_STAR</option>
+                <option value="60">COOLTIME_ADDNEW_COOLTIME</option>
+                <option value="61">COOLTIME_CHANGE_FOR_EVENT</option>
+                <option value="62">COOLTIME_CHANGE</option>
+                <option value="63">COOLTIME_GAIN_HEART</option>
+                <option value="64">COOLTIME_GAIN_MATERIAL</option>
+                <option value="65">COOLTIME_REDUCE_TIME</option>
+                <option value="66">COOLTIME_GAIN_MONEY</option>
+                <option value="67">COOLTIME_GAIN_STAR</option>
+                <option value="68">COOLTIME_CHANGE_FOR_POT_RANDOM</option>
+                <option value="69">COOLTIME_CHANGE_FOR_POT</option>
+                <option value="70">MANDRAKECOMPOSITE_COMPOSITE</option>
+                <option value="71">MANDRAKECOMPOSITE_COMPOSITE_USE_MONEY</option>
+                <option value="72">MANDRAKECOMPOSITE_COMPOSITE_USE_STAR</option>
+                <option value="80">FLOWER_CHANGE_FOR_CURRUNCY</option>
+                <option value="81">FLOWER_CHANGE_FOR_ITEM</option>
+                <option value="82">FLOWER_REDUCE_TIME</option>
+                <option value="90">MANDRAKE_BUY_CURRUNCY</option>
+                <option value="100">TUTORIAL_CHANGE_VALUE</option>
+                <option value="101">TUTORIAL_CHANGE_VALUE_LIST</option>
+                <option value="102">TUTORIAL_ACQUIRE_REWARD_CURRUNCY</option>
+                <option value="103">TUTORIAL_ACQUIRE_REWARD_ITEM</option>
+                <option value="110">HARVEST</option>
+                <option value="120">RECV_EXPLORE_HELP_REWARD</option>
+                <option value="121">RECV_MAIL</option>
+                <option value="122">RECV_FRIEND_PRESENT</option>
+                <option value="123">RECV_ALL_FRIEND_PRESENT</option>
+                <option value="130">POT_UPGRADE_LEVEL</option>
+                <option value="140">RECOMMEND_REGISTER_TARGET</option>
+                <option value="141">RECOMMEND_REGISTER_PUBLIC_SERIAL</option>
+                <option value="150">EVENT_REWARD_MAIL_ACQUIRE</option>
+                <option value="151">EVENT_REWARD_MAIL_SENDED</option>
+                <option value="160">COOLTIME_CHANGE_FOR_ILLUST_FROM_MAIL</option>
+                <option value="161">COOLTIME_CHANGE_FOR_POT_USE_MONEY</option>
+                <option value="162">COOLTIME_CHANGE_FOR_POT_USE_STAR</option>
+                <option value="163">COOLTIME_CHANGE_FOR_POT_RANDOM_USE_MONEY</option>
+                <option value="164">COOLTIME_CHANGE_FOR_POT_RANDOM_USE_STAR</option>
+                <option value="170">REGIST_REVIEW_USER</option>
+                <option value="171">BADGE_BUY</option>
+                <option value="180">REWARDSYSTEM_ACQUIRE_REWARD</option>
+                <option value="190">TREASURE_HUNT_RESET</option>
+                <option value="191">TREASURE_HUNT_COMPLETE</option>
+                <option value="200">COLLECT_QUEST_GETLIST</option>
+                <option value="201">COLLECT_QUEST_GETSTATE</option>
+                <option value="202">COLLECT_QUEST_COMPLETE</option>
+                <option value="203">LOGIN_REWARD_ACQUIRE</option>
+                <option value="204">UNITY_ADS_RWARD_AQCQUIRE</option>
+                <option value="205">SHARE_LINK_REWARD_ACQUIRE</option>
+                <option value="206">COOLTIME_GAIN_INVENTORY</option>
+                <option value="301">BUY_INVENTORY_ITEM</option>
+                <option value="302">CHANGE_INVENTORY_ITEM_TO_CURRENCY</option>
+                <option value="303">CHANGE_MATERIAL_TO_INVENTORY_ITEM</option>
+                <option value="304">CHANGE_INVENTORY_ITEM_TO_MATERIAL</option>
+                <option value="305">CHANGE_INVENTORY_ITEM_TO_INVENTORY_ITEM</option>
+                <option value="306">CHANGE_INVENTORY_ITEM_WITH_COOLTIME</option>
+                <option value="307">EVENT_LOGIN_REWARD</option>
+                <option value="308">EVENT_LOGIN_REWARD_RECEIVE</option>
+                <option value="1000">COOLTIME_RESET</option>
+                <option value="1001">CHANGE_FLOWER</option>
+                <option value="1002">CHANGE_INVENTORY_ITEM_TO_BADGE</option>
+              </select>
+            </div>
+
+            <div class="col-auto">
+              <label class="form-label">Item Type</label>
+              <select id="game_log_item_type" class="form-select" aria-label="Default select example">
+                <option value="" selected>ALL</option>
+                <option value="1">CURRENCY</option>
+                <option value="2">INVENTORY</option>
+                <option value="3">Mandrake_Normal</option>
+                <option value="4">Mandrake_Rare</option>
+                <option value="5">Mandrake_Composite</option>
+                <option value="6">Material</option>
+                <option value="7">Explore</option>
+                <option value="8">BADGE</option>
+                <option value="9">SEED</option>
+                <option value="100">CoolDown</option>
+                <option value="101">EVENTSYSTEM</option>
+                <option value="102">FLOWER</option>
+                <option value="103">TUTORIAL</option>
+                <option value="104">FLOWER_TIME</option>
+                <option value="105">POT_LEVEL</option>
+                <option value="106">COUPON</option>
+                <option value="107">REWARDSYSTEM</option>
+                <option value="108">TREASURE_HUNT</option>
+                <option value="109">COLLECT_QUEST</option>
+                <option value="110">LOGINREWARD</option>
+                <option value="111">UNITY_ADS_REWARD</option>
+              </select>
+            </div>
+
+            <div class="col-lg-3">
+              <label class="form-label">ID</label>
+              <div class="input-group">
+                <input id="game_log_finding_factor" type="text" class="form-control" placeholder=""
+                  aria-label="Text input with segmented dropdown button">
+                <div style="text-align: right">
+                  <button id="game_log_btn_find" type="button" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                    <span id="game_log_spinner_find" class="spinner-border spinner-border-sm" role="status"
+                      aria-hidden="true" hidden="true"></span>
+                    <span class="visually-hidden">Finding</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row pt-5">
+            <div class="col-12">
+              <table id="table_game_log"
+                class="table table-bordered table-hover table-striped-columns table-sm text-nowrap"
+                style="background-color: antiquewhite; font-size: 13px">
+              </table>
+            </div>
+          </div>
+        </div>
+        <!---------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <!--all_event------------------------------------------------------------------------------------------------------------------------------>
+        <div class="tab-pane fade" id="tab_register_event" role="tabpanel" aria-labelledby="tabbtn_register_event"
+          tabindex="0">
+
+          <h4 style="color:rgb(101, 186, 255);">Register Event</h4>
+          <p>DailyReset(play once in a day), EverReset(play once in a enable term/can be use everyday only)</p>
+
+          <div class="row pt-3">
+            <div class="col-auto">
+              <label class="form-label">Event Type</label>
+              <select id="register_event_event_type" class="form-select">
+                <option value=1 selected>Seed</option>
+                <option value=2>Explore </option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label class="form-label">Enable DayOfWeek</label>
+              <select id="register_event_enable_dayofweek" class="form-select">
+                <option value=0 selected>Everyday</option>
+                <option value=1>Monday</option>
+                <option value=2>Tuesday</option>
+                <option value=3>Wednesday</option>
+                <option value=4>Thursday</option>
+                <option value=5>Friday</option>
+                <option value=6>Saturday</option>
+                <option value=7>Sunday</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label class="form-label">Reset Type</label>
+              <select id="register_event_reset_type" class="form-select">
+                <option value=1 selected>DailyReset</option>
+                <option value=2>EverReset</option>
+                <option value=3>Unlimited</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label class="form-label">Slot Number</label>
+              <select id="register_event_slot_number" class="form-select">
+                <option value=1 selected>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label class="form-label"><i class="bi bi-person-badge"></i> Excute ID</label>
+              <input id="register_event_excute_id" type="text" class="form-control">
+            </div>
+          </div>
+
+          <div class="row pt-4">
+            <div class="col-auto">
+              <label class="form-label"><i class="bi bi-person-badge"></i> Start DateTime UTC</label>
+              <div class="input-group">
+                <input type="text" id="register_event_start_date_utc" class="form-control" placeholder="2099-01-01">
+                <span class="input-group-addon"></span>
+                <span class="input-group-text">~</span>
+                <input type="text" id="register_event_start_time_utc" class="form-control" placeholder="00:00:00" />
+              </div>
+            </div>
+            <div class="col-auto">
+              <label class="form-label"><i class="bi bi-person-badge"></i> End DateTime UTC</label>
+              <div class="input-group">
+                <input type="text" id="register_event_end_date_utc" class="form-control" placeholder="2099-01-01">
+                <span class="input-group-addon"></span>
+                <span class="input-group-text">~</span>
+                <input type="text" id="register_event_end_time_utc" class="form-control" placeholder="23:59:59" />
+              </div>
+            </div>
+            <div class="col-3">
+              <label class="form-label"><i class="bi bi-person-badge"></i> Display Name</label>
+              <input id="register_event_display_name" type="text" class="form-control">
+            </div>
+            <div class="col-auto">
+              <button id="register_event_btn_register_event" class="btn btn-primary" type="button"
+                style="position: relative; top: 32px;">Register
+                Event</button>
+            </div>
+          </div>
+
+          <hr />
+
+          <h4 style="color: rgb(8, 219, 8);">Change Event</h4>
+
+          <div class="row pt-3">
+            <div class="col-auto">
+              <label class="form-label">Change Value</label>
+              <select id="change_event_change_value" class="form-select">
+                <option value=1 selected>Enable</option>
+                <option value=0>Disable </option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label class="form-label"><i class="bi bi-person-badge"></i> Event Key</label>
+              <input id="change_event_event_key" type="text" class="form-control">
+            </div>
+            <div class="col-auto">
+              <button id="change_event_btn_change_event" class="btn btn-success" type="button"
+                style="position: relative; top: 32px;">Change Event</button>
+            </div>
+          </div>
+
+          <hr />
+
+          <h4>Table</h4>
+
+          <div class="row">
+            <div class="col-12">
+              <table id="table_all_event"
+                class="table table-bordered table-hover table-striped-columns table-sm text-nowrap"
+                style="background-color: antiquewhite; font-size: 13px">
+              </table>
+            </div>
+          </div>
+        </div>
+        <!---------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <!--post_mail------------------------------------------------------------------------------------------------------------------------------>
+        <div class="tab-pane fade" id="tab_post_mail" role="tabpanel" aria-labelledby="tabbtn_post_mail" tabindex="0">
+          <h4>Post Mail</h4>
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button class="nav-link text-info active" data-bs-toggle="tab" data-bs-target="#nav-post_mail_add"
+                type="button" role="tab" aria-controls="nav-post_mail_add" aria-selected="true">지급</button>
+              <button class="nav-link text-info" data-bs-toggle="tab" data-bs-target="#nav-post_mail_delete"
+                type="button" role="tab" aria-controls="nav-post_mail_delete" aria-selected="false">회수</button>
+            </div>
+          </nav>
+
+          <div class="tab-content pt-5" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-post_mail_add" role="tabpanel"
+              aria-labelledby="nav-home-tab">
+
+              <div class="row">
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-search"></i> ID Type</label>
+                  <select id="post_mail_id_type" class="form-select">
+                    <option value="user_key" selected>user_key</option>
+                    <option value="serial_key">serial_key</option>
+                  </select>
+                </div>
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-person-badge"></i> ID Type Key</label>
+                  <input id="input_post_mail_add_user_key" type="text" class="form-control">
+                </div>
+              </div>
+
+              <div class="row pt-4">
+                <div class="col-3">
+                  <label class="form-label"><i class="bi bi-person-badge"></i> Title</label>
+                  <input id="input_post_mail_title" type="text" class="form-control">
+                </div>
+                <div class="col-3">
+                  <label class="form-label"><i class="bi bi-person-badge"></i> Sub Title</label>
+                  <input id="input_post_mail_sub_title" type="text" class="form-control">
+                </div>
+              </div>
+
+              <div class="row pt-4">
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-person-badge"></i> Type</label>
+                  <input id="input_post_mail_type" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-person-badge"></i> ID</label>
+                  <input id="input_post_mail_id" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-person-badge"></i> Count</label>
+                  <input id="input_post_mail_count" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-primary" type="button" id="post_mail_btn_Add"
+                    style="position: relative; top: 32px;">Add</button>
+                </div>
+              </div>
+
+              <!-- <div class="row pt-5">
+                <div class="col">
+                  <img src="imgs/Legends.jpg" alt="...">
+                </div>
+              </div> -->
+            </div>
+
+            <div class="tab-pane fade" id="nav-post_mail_delete" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <div class="row">
+                <div class="col-2">
+                  <label class="form-label"><i class="bi bi-person-badge"></i> Index</label>
+                  <input id="input_post_mail_delete_index" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-primary" type="button" id="post_mail_btn_delete"
+                    style="position: relative; top: 32px;">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <!--shop------------------------------------------------------------------------------------------------------------------------------>
+        <div class="tab-pane fade" id="tab_shop" role="tabpanel" aria-labelledby="tabbtn_shop" tabindex="0">
+          <h4>Shop</h4>
+
+          <div class="row">
+            <div class="col-auto">
+              <strong id="shop_board_store_text" style="line-height: 40px;"> Board: 비어있음</strong> | <strong
+                id="shop_packages_store_text">Packages: 비어있음</strong>
+            </div>
+            <div class="col-auto">
+              <button id="shop_btn_store_apply" type="button" class="btn btn-primary">Apply</button>
+            </div>
+            <div class="col-auto">
+              <button id="shop_btn_store_restore" type="button" class="btn btn-danger">Restore</button>
+            </div>
+          </div>
+
+          <hr />
+
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button class="nav-link text-info active" data-bs-toggle="tab" data-bs-target="#nav-shop_board"
+                type="button" role="tab" aria-controls="nav-shop_board" aria-selected="true">Board</button>
+              <button class="nav-link text-info" data-bs-toggle="tab" data-bs-target="#nav-shop_packages" type="button"
+                role="tab" aria-controls="nav-shop_packages" aria-selected="false">Packages</button>
+            </div>
+          </nav>
+
+          <div class="tab-content pt-5" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-shop_board" role="tabpanel" aria-labelledby="nav-home-tab">
+
+              <div class="row mb-5 gx-2">
+                <div class="col-auto">
+                  <div>
+                    <label for="formFile" class="form-label">CSV File</label>
+                    <input class="form-control" type="file" id="shop_board_csv_file">
+                  </div>
+                </div>
+
+                <!-- <div class="col-auto">
+                  <button id="shop_board_btn_create" type="button" class="btn btn-success">Create</button>
+                </div>
+                <div class="col-auto">
+                  <button id="shop_board_btn_update" type="button" class="btn btn-warning">Update</button>
+                </div>
+                <div class="col-auto">
+                  <button id="shop_board_btn_delete" type="button" class="btn btn-danger">Delete</button>
+                </div> -->
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <table id="table_shop_board"
+                    class="table table-bordered table-hover table-striped-columns table-sm text-nowrap"
+                    style="background-color: antiquewhite; font-size: 13px">
+                  </table>
+                </div>
+              </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="shop_board_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">Shop Board</h5>
+                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">idx</span>
+                        <input type="text" class="form-control" id="shop_board_modal_idx_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">id</span>
+                        <input type="text" class="form-control" id="shop_board_modal_id_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">icon</span>
+                        <input type="text" class="form-control" id="shop_board_modal_icon_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">price_type</span>
+                        <input type="text" class="form-control" id="shop_board_modal_price_type_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">price_id</span>
+                        <input type="text" class="form-control" id="shop_board_modal_price_id_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">price_value</span>
+                        <input type="text" class="form-control" id="shop_board_modal_price_value_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">repurchasable</span>
+                        <input type="text" class="form-control" id="shop_board_modal_repurchasable_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">description</span>
+                        <input type="text" class="form-control" id="shop_board_modal_description_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">iap_id</span>
+                        <input type="text" class="form-control" id="shop_board_modal_iap_id_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">dc</span>
+                        <input type="text" class="form-control" id="shop_board_modal_dc_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">show_new</span>
+                        <input type="text" class="form-control" id="shop_board_modal_show_new_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">price_ios</span>
+                        <input type="text" class="form-control" id="shop_board_modal_price_ios_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">price_android</span>
+                        <input type="text" class="form-control" id="shop_board_modal_price_android_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">show</span>
+                        <input type="text" class="form-control" id="shop_board_modal_show_input">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">season</span>
+                        <input type="text" class="form-control" id="shop_board_modal_season_input">
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button id="shop_board_btn_modal_apply" type="button" class="btn btn-primary">Apply</button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <!-- Modal -->
+            </div>
+
+            <div class="tab-pane fade" id="nav-shop_packages" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <div class="row mb-5 gx-2">
+                <div class="col-auto">
+                  <div>
+                    <label for="formFile" class="form-label">CSV File</label>
+                    <input class="form-control" type="file" id="shop_packages_csv_file">
+                  </div>
+                </div>
+                <!-- <div class="col-auto">
+                  <button id="shop_packages_btn_create" type="button" class="btn btn-success">Create</button>
+                </div>
+                <div class="col-auto">
+                  <button id="shop_packages_btn_update" type="button" class="btn btn-warning">Update</button>
+                </div>
+                <div class="col-auto">
+                  <button id="shop_packages_btn_delete" type="button" class="btn btn-danger">Delete</button>
+                </div> -->
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <table id="table_shop_packages"
+                    class="table table-bordered table-hover table-striped-columns table-sm text-nowrap"
+                    style="background-color: antiquewhite; font-size: 13px">
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="shop_packages_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Shop Packages</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">pk</span>
+                      <input type="text" class="form-control" id="shop_packages_modal_pk_input">
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">id_package</span>
+                      <input type="text" class="form-control" id="shop_packages_modal_id_package_input">
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">item_type</span>
+                      <input type="text" class="form-control" id="shop_packages_modal_item_type_input">
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">item_id</span>
+                      <input type="text" class="form-control" id="shop_packages_modal_item_id_input">
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">item_amount</span>
+                      <input type="text" class="form-control" id="shop_packages_modal_item_amount_input">
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="shop_packages_btn_modal_apply" type="button" class="btn btn-primary">Apply</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- Modal -->
+          </div>
+        </div>
+        <!---------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <!--group_mail_reward------------------------------------------------------------------------------------------------------------------------------>
+        <div class="tab-pane fade" id="tab_group_mail_reward" role="tabpanel" aria-labelledby="tabbtn_group_mail_reward"
+          tabindex="0">
+
+          <h4>Group Mail Reward</h4>
+
+          <img src="imgs/csv_userkey.png">
+
+          <div class="row pt-5">
+            <div class="col-auto">
+              <div>
+                <label for="formFile" class="form-label">CSV File 경로</label>
+                <input class="form-control" type="file" id="group_mail_reward_formFile_csv">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <label class="form-label">보상 메일 제목</label>
+              <select id="group_mail_reward_reward_mail_title" class="form-select">
+                <!-- <option value=1 selected>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option> -->
+              </select>
+            </div>
+
+            <div class="col-auto">
+              <button class="btn btn-primary" type="button" id="group_mail_reward_btn_send_reward"
+                style="position: relative; top: 32px;">보상주기</button>
+            </div>
+
+          </div>
+
+          <hr />
+
+          <div class="row g-3">
+            <div class="col-2">
+              <div>
+                <label class="form-label">제목</label>
+                <input type="text" class="form-control" id="group_mail_reward_title">
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div>
+                <label class="form-label">내용</label>
+                <input type="text" class="form-control" id="group_mail_reward_message">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div>
+                <label class="form-label">아이템 타입</label>
+                <input type="text" class="form-control" id="group_mail_reward_item_type">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div>
+                <label class="form-label">아이템 id</label>
+                <input type="text" class="form-control" id="group_mail_reward_item_id">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div>
+                <label class="form-label">아이템 수</label>
+                <input type="text" class="form-control" id="group_mail_reward_item_count">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div>
+                <label class="form-label">만기날</label>
+                <input type="text" class="form-control" id="group_mail_reward_expire_day">
+              </div>
+            </div>
+
+            <div class="col-auto" style="position: relative; top: 32px;">
+              <button class="btn btn-primary" type="button" id="group_mail_reward_btn_store">저장</button>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-12">
+              <table id="table_group_mail_reward"
+                class="table table-bordered table-hover table-striped-columns table-sm text-nowrap"
+                style="background-color: antiquewhite; font-size: 13px">
+              </table>
+            </div>
+          </div>
+        </div>
+        <!---------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <!--Notification------------------------------------------------------------------------------------------------------------------------------>
+        <div class="tab-pane fade" id="tab_notification" role="tabpanel" aria-labelledby="tabbtn_notification"
+          tabindex="0">
+
+          <h4 style="color:rgb(101, 186, 255);">Send Notification Mail</h4>
+
+          <!-- <img src="imgs/Legends2.jpg"> -->
+
+          </br>
+
+          <div class="row pt-3">
+            <div class="col-4">
+              <div>
+                <label class="form-label">Title</label>
+                <input type="text" class="form-control" id="notification_title">
+              </div>
+            </div>
+
+            <div class="col-8">
+              <div>
+                <label class="form-label">Message</label>
+                <input type="text" class="form-control" id="notification_message">
+              </div>
+            </div>
+          </div>
+
+          <div class="row pt-3">
+            <div class="col-auto">
+              <div>
+                <label class="form-label">Type</label>
+                <input type="text" class="form-control" id="notification_type" value="1">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div>
+                <label class="form-label">ID</label>
+                <input type="text" class="form-control" id="notification_id" value="1">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div>
+                <label class="form-label">Count</label>
+                <input type="text" class="form-control" id="notification_count" value="1">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div>
+                <label class="form-label">ReserveDatetime</label>
+                <input type="text" class="form-control" id="notification_reserve_datetime" value="2999-01-01 00:00:00">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div>
+                <label class="form-label">ExpireIntervalMinute</label>
+                <input type="text" class="form-control" id="notification_expire_interval_minute" value="11520">
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <button class="btn btn-primary" type="button" id="notification_btn_send"
+                style="position: relative; top: 32px;">Send</button>
+            </div>
+          </div>
+
+
+
+          <hr />
+
+          <h4 style="color: rgb(8, 219, 8);">Notification</h4>
+          <div class="row pt-3">
+            <div class="col-auto">
+              <label class="form-label">Change Value</label>
+              <select id="notification_change_value" class="form-select">
+                <option value=1 selected>Enable</option>
+                <option value=0>Disable </option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <label class="form-label"><i class="bi bi-person-badge"></i> Notice Key</label>
+              <input id="notification_notice_key" type="text" class="form-control">
+            </div>
+            <div class="col-auto">
+              <button id="notification_btn_change_notice" class="btn btn-success" type="button"
+                style="position: relative; top: 32px;">Change Notice</button>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row pb-4">
+            <div class="col-auto">
+              <button class="btn btn-info" type="button" id="notification_btn_update_table">Update Table</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <table id="table_all_notification"
+                class="table table-bordered table-hover table-striped-columns table-sm text-nowrap"
+                style="background-color: antiquewhite; font-size: 13px">
+              </table>
+            </div>
+          </div>
+        </div>
+        <!---------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <!--collection------------------------------------------------------------------------------------------------------------------------------>
+        <div class="tab-pane fade" id="tab_collection" role="tabpanel" aria-labelledby="tabbtn_collection" tabindex="0">
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button class="nav-link text-info active" data-bs-toggle="tab" data-bs-target="#nav-register_receipt"
+                type="button" role="tab" aria-controls="nav-register_receipt" aria-selected="true">Register
+                Receipt</button>
+              <button class="nav-link text-info" data-bs-toggle="tab" data-bs-target="#nav-login_key_generater"
+                type="button" role="tab" aria-controls="nav-login_key_generater" aria-selected="false">Login Key
+                Generater</button>
+              <button class="nav-link text-info" data-bs-toggle="tab" data-bs-target="#nav-set_seed_state" type="button"
+                role="tab" aria-controls="nav-set_seed_state" aria-selected="false">Set Seed State</button>
+              <button class="nav-link text-info" data-bs-toggle="tab" data-bs-target="#nav-product_recall" type="button"
+                role="tab" aria-controls="nav-product_recall" aria-selected="false">Product Recall</button>
+            </div>
+          </nav>
+
+          <div class="tab-content pt-3" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-register_receipt" role="tabpanel"
+              aria-labelledby="nav-home-tab">
+
+              <h4>Register Receipt</h4>
+              <div class="row pt-4">
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-search"></i> ID Type</label>
+                  <select id="register_receipt_id_type" class="form-select">
+                    <option value="user_key" selected>user_key</option>
+                    <option value="serial_key">serial_key</option>
+                  </select>
+                </div>
+                <div class="col-lg-2">
+                  <label class="form-label"><i class="bi bi-person-badge"></i> ID</label>
+                  <input id="register_receipt_input_id" type="text" class="form-control">
+                </div>
+                <div class="col-lg-3">
+                  <label class="form-label"><i class="bi bi-cloud-arrow-up"></i> SKU</label>
+                  <input id="register_receipt_input_sku" type="text" class="form-control">
+                </div>
+                <div class="col-lg-3">
+                  <label class="form-label"><i class="bi bi-receipt"></i> Order ID</label>
+                  <input id="register_receipt_input_order_id" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-receipt"></i> Season</label>
+                  <input id="register_receipt_input_season" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-primary" type="button" id="register_receipt_btn_register"
+                    style="position: relative; top: 32px;">Register Now</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-login_key_generater" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <h4>Login Key Generater</h4>
+              <div class="row pt-4">
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-search"></i> ID Type</label>
+                  <select id="login_key_generater_id_type" class="form-select">
+                    <option value="user_key" selected>user_key</option>
+                    <option value="serial_key">serial_key</option>
+                  </select>
+                </div>
+                <div class="col-lg-2  ">
+                  <label class="form-label"><i class="bi bi-person-badge"></i> ID</label>
+                  <input id="login_key_generater_input_id" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-cloud-arrow-up"></i> Expire Day</label>
+                  <input id="login_key_generater_input_expire_day" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-primary" type="button" id="login_key_generater_btn_register"
+                    style="position: relative; top: 32px;">Register Now</button>
+                </div>
+              </div>
+              <div class="row pt-5 ps-3">
+                <div class="mt-4 p-5 w-25 bg-success text-white rounded">
+                  <h1 id="login_key_generater_text_guid"></h1>
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-primary" type="button" id="login_key_generater_btn_copy"
+                    style="position: relative; top: 24px;">Copy</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-set_seed_state" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <h4>Set Seed State</h4>
+              <div class="row pt-4">
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-search"></i> ID Type</label>
+                  <select id="set_seed_state_id_type" class="form-select">
+                    <option value="user_key" selected>user_key</option>
+                    <option value="serial_key">serial_key</option>
+                  </select>
+                </div>
+                <div class="col-lg-2">
+                  <label class="form-label"><i class="bi bi-cloud-arrow-up"></i> ID</label>
+                  <input id="finding_factor_set_seed_state_id" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <label class="form-label">Type</label>
+                  <select class="form-select" id="finding_factor_set_seed_state_state">
+                    <option value=0 selected>회수</option>
+                    <option value=1>지급</option>
+                  </select>
+                </div>
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-cloud-arrow-up"></i> Seed number</label>
+                  <input id="finding_factor_set_seed_state_seed_number" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-primary" type="button" id="set_seed_state_btn_execute"
+                    style="position: relative; top: 32px;">Execute</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-product_recall" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <h4>Product Recall</h4>
+              <div class="row pt-4">
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-search"></i> ID Type</label>
+                  <select id="product_recall_id_type" class="form-select">
+                    <option value="user_key" selected>user_key</option>
+                    <option value="serial_key">serial_key</option>
+                  </select>
+                </div>
+                <div class="col-lg-2">
+                  <label class="form-label"><i class="bi bi-cloud-arrow-up"></i> ID</label>
+                  <input id="product_recall_input_id" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-cloud-arrow-up"></i> Item Type</label>
+                  <input id="product_recall_input_item_type" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-cloud-arrow-up"></i> Item ID</label>
+                  <input id="product_recall_input_item_id" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <label class="form-label"><i class="bi bi-cloud-arrow-up"></i> Amount</label>
+                  <input id="product_recall_input_amount" type="text" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-primary" type="button" id="product_recall_btn_execute"
+                    style="position: relative; top: 32px;">Execute</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <!--subscribe_manager------------------------------------------------------------------------------------------------------------------------------>
+        <div class="tab-pane fade" id="tab_subscribe_manager" role="tabpanel" aria-labelledby="tabbtn_subscribe_manager"
+          tabindex="0">
+          <div class="input-group mb-3" style="width: 400px">
+            <input id="ssm_finding_factor" type="text" class="form-control" placeholder="User key" aria-label=""
+              aria-describedby="User key">
+            <button class="btn btn-primary" type="button " id="ssm_btn_find">Find</button>
+          </div>
+
+          <table id="tbl_user_subscribe"
+            class="table table-bordered table-hover table-striped-columns table-sm text-nowrap"
+            style="width: 600px; background-color: antiquewhite; font-size: 13px">
+            <thead>
+              <tr>
+                <th>idx</th>
+                <th>user_key</th>
+                <th>type</th>
+                <th>start_time</th>
+                <th>end_time</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 15px; width: 610px;">
+            <button id="ssm_btn_delete" type="button" class="btn btn-danger"
+              style="float:right; margin-left: 5px; margin-right: 5px">Delete</button>
+            <button id="ssm_btn_update" type="button" class="btn btn-warning"
+              style="float:right; margin-left: 5px; margin-right: 5px">Update</button>
+            <button id="ssm_btn_add" type="button" class="btn btn-success"
+              style="float:right; margin-left: 5px; margin-right: 5px">Add</button>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="ssm_modal_add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Subscribe manager</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3">Selected user key</span>
+                    <input type="text" class="form-control" id="ssm_modal_add_input_selected_user_key"
+                      aria-describedby="basic-addon3">
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3">Type</span>
+                    <input type="text" class="form-control" id="ssm_modal_add_input_type"
+                      aria-describedby="basic-addon3">
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3">Expiration days</span>
+                    <input type="text" class="form-control" id="ssm_modal_add_input_expire"
+                      aria-describedby="basic-addon3">
+                  </div>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button id="ssm_btn_add_procced" type="button" class="btn btn-primary">Procced</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="ssm_modal_delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Subscribe manager</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  해당 Row를 삭제 하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button id="ssm_btn_delete_procced" type="button" class="btn btn-primary">Procced</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-------------------------------------------------------------------------------------------------------------------------------->
+      </div>
+    </div>
+
+    <!-- Toast message box.-->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="live_toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+        <div class="toast-header">
+          <img src="imgs/logo.png" class="rounded me-2" alt="..." width="32" height="32">
+          <strong id="toast_title" class="me-auto" style="">Bootstrap</strong>
+          <small></small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div id="toast_message" class="toast-body" style="background-color:#192715;  text-align: center">
+          Hello, world! This is a toast message.
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    $('#logout_link').on("click", function (e) {
+      $.ajax({
+        url: domain_url + "/login/delete",
+        //data: JSON.stringify(jsonData),
+        type: "POST",
+        async: false,
+        timeout: 5000,
+        dataType: "JSON",
+        contentType: "application/json; charset=utf-8",
+
+        success: function (response) {
+
+          let live_toast = document.getElementById("live_toast");
+          let toast = new bootstrap.Toast(live_toast)
+          if (response.error_code == 0) {
+            document.getElementById("toast_title").innerHTML = "성공";
+            document.getElementById("toast_message").innerHTML = "성공했습니다.";
+
+            window.location = domain_url;
+          }
+          else {
+            document.getElementById("toast_title").innerHTML = "실패: " + response.error_code;
+            document.getElementById("toast_message").innerHTML = "실패했습니다.";
+          }
+
+          toast.show();
+        }.bind(this),
+        error: function (xhr) {
+          console.log("");
+          console.log("logout | [requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+          console.log("");
+        },
+        complete: function (data, textStatus) {
+          console.log("");
+          console.log("logout | [requestPostBodyJson] : [complete] : " + textStatus);
+          console.log("");
+        }
+      })
+    })    		
+  </script>
+</body>
+
+</html>
